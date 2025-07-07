@@ -128,13 +128,13 @@ in {
       output = {
         "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
 	  mode = "2560x1440@143.972Hz";
-	  background = "${homeDir}/Pictures/backgrounds/bgRight.png stretch #000000";
+	  background = "${homeDir}/nixdots/bgRight.png stretch #000000";
 	  scale_filter = "nearest";
 	  pos = "1920 0";
 	};
         "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487"  = { 
 	  mode = "1920x1080@143.999Hz";
-	  background = "${homeDir}/Pictures/backgrounds/bgLeft.png stretch #000000";
+	  background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
 	  pos = "0 180";
 	};
       };
@@ -157,7 +157,7 @@ in {
       ];
       window = {
         border = 3;
-        titlebar = false;
+        titlebar = true;
         commands = [
           {
             command = "opacity 0.87, border pixel 3, inhibit_idle fullscreen";
@@ -165,42 +165,48 @@ in {
               class = ".*";
             };
           }
-         ## {
-         ##   command = "opacity 0.9, border pixel 3, inhibit_idle fullscreen";
-         ##   criteria = {
-         ##     app_id = ".*";
-         ##   };
-         ## }
-         ## {
-         ##   command = "floating enable, resize set 800 500";
-         ##   criteria = {
-         ##     app_id = "org.keepassxc.KeePassXC";
-         ##   };
-         ## }
-         ## {
-         ##   command = "resize set 650 450";
-         ##   criteria = {
-         ##     app_id = "snippetexpandergui";
-         ##   };
-         ## }
-         ## {
-         ##   command = "floating enable, sticky enable";
-         ##   criteria = {
-         ##     title = "Picture-in-Picture";
-         ##   };
-         ## }
-         ## {
-         ##   command = "floating enable, sticky enable";
-         ##   criteria = {
-         ##     title = ".*Sharing Indicator.*";
-         ##   };
-         ## }
-         ## {
-         ##   command = "floating enable, sticky enable, resize set 650 450";
-         ##   criteria = {
-         ##     title = ".*Syncthing Tray.*";
-         ##   };
-         ## }
+          {
+            command = "opacity 0.87, border pixel 3, inhibit_idle fullscreen";
+            criteria = {
+              app_id = ".*";
+            };
+          }
+          {
+            command = "opacity 1, border pixel 3, inhibit_idle fullscreen";
+            criteria = {
+              app_id = "firefox";
+            };
+          }
+          {
+            command = "floating enable, resize set 800 500";
+            criteria = {
+              app_id = "org.keepassxc.KeePassXC";
+            };
+          }
+          {
+            command = "resize set 650 450";
+            criteria = {
+              app_id = "snippetexpandergui";
+            };
+          }
+          {
+            command = "floating enable, sticky enable";
+            criteria = {
+              title = "Picture-in-Picture";
+            };
+          }
+          {
+            command = "floating enable, sticky enable";
+            criteria = {
+              title = ".*Sharing Indicator.*";
+            };
+          }
+          {
+            command = "floating enable, sticky enable, resize set 650 450";
+            criteria = {
+              title = ".*Syncthing Tray.*";
+            };
+          }
         ];
       };
       startup = [
