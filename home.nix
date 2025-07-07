@@ -1,11 +1,13 @@
 { config, pkgs, spicetify-nix, ... }:
-
-{
+let
+  username = "kryddan";
+  homeDir = "/home/${username}";
+in {
   #nix.settings.experimental-features = ["nix-command" "flakes"];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "kryddan";
-  home.homeDirectory = "/home/kryddan";
+  home.username = username;
+  home.homeDirectory = homeDir;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -20,6 +22,7 @@
   # environment.
   home.packages = with pkgs; [
     signal-desktop
+    gimp
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -63,6 +66,16 @@
   in
   {
     enable = true;
+  };
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    desktop = "${homeDir}";
+    documents = "${homeDir}/Documents";
+    download = "${homeDir}/Downloads";
+    music = "${homeDir}/Music";
+    pictures = "${homeDir}/Pictures";
+    videos = "${homeDir}/Videos";
   };
   programs.git = {
     enable = true;
@@ -115,10 +128,80 @@
       output = {
         "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
 	  mode = "2560x1440@143.972Hz";
+	  background = "${homeDir}/Pictures/backgrounds/bgRight.png stretch #000000";
+	  scale_filter = "nearest";
+	  pos = "1920 0";
 	};
         "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487"  = { 
 	  mode = "1920x1080@143.999Hz";
+	  background = "${homeDir}/Pictures/backgrounds/bgLeft.png stretch #000000";
+	  pos = "0 180";
 	};
+      };
+      gaps = {
+        inner = 30;
+      };
+      workspaceOutputAssign = let
+        main   = "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455";
+	second = "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487";
+      in [
+        { output = main; workspace = "1"; }
+        { output = second; workspace = "2"; }
+        { output = second; workspace = "3"; }
+        { output = main; workspace = "4"; }
+        { output = main; workspace = "5"; }
+        { output = main; workspace = "6"; }
+        { output = second; workspace = "7"; }
+        { output = second; workspace = "8"; }
+        { output = second; workspace = "9"; }
+      ];
+      window = {
+        border = 3;
+        titlebar = false;
+        commands = [
+          {
+            command = "opacity 0.87, border pixel 3, inhibit_idle fullscreen";
+            criteria = {
+              class = ".*";
+            };
+          }
+         ## {
+         ##   command = "opacity 0.9, border pixel 3, inhibit_idle fullscreen";
+         ##   criteria = {
+         ##     app_id = ".*";
+         ##   };
+         ## }
+         ## {
+         ##   command = "floating enable, resize set 800 500";
+         ##   criteria = {
+         ##     app_id = "org.keepassxc.KeePassXC";
+         ##   };
+         ## }
+         ## {
+         ##   command = "resize set 650 450";
+         ##   criteria = {
+         ##     app_id = "snippetexpandergui";
+         ##   };
+         ## }
+         ## {
+         ##   command = "floating enable, sticky enable";
+         ##   criteria = {
+         ##     title = "Picture-in-Picture";
+         ##   };
+         ## }
+         ## {
+         ##   command = "floating enable, sticky enable";
+         ##   criteria = {
+         ##     title = ".*Sharing Indicator.*";
+         ##   };
+         ## }
+         ## {
+         ##   command = "floating enable, sticky enable, resize set 650 450";
+         ##   criteria = {
+         ##     title = ".*Syncthing Tray.*";
+         ##   };
+         ## }
+        ];
       };
       startup = [
         # Launch Firefox on start
