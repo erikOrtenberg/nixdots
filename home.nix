@@ -54,7 +54,7 @@
   #  /etc/profiles/per-user/kryddan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   imports = [ spicetify-nix.homeManagerModules.default ];
@@ -110,6 +110,14 @@
       input = {
         "type:keyboard" = {
 	  xkb_layout = "se";
+	};
+      };
+      output = {
+        "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
+	  mode = "2560x1440@143.972Hz";
+	};
+        "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487"  = { 
+	  mode = "1920x1080@143.999Hz";
 	};
       };
       startup = [
