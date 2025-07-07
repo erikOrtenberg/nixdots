@@ -23,6 +23,7 @@ in {
   home.packages = with pkgs; [
     signal-desktop
     gimp
+    pulsemixer
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
