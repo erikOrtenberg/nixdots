@@ -25,6 +25,10 @@ in {
     gimp
     pulsemixer
     audacity
+    nerd-fonts.terminess-ttf
+    nerd-fonts.zed-mono
+    swaybg
+    lshw
   ];
 
   home.sessionVariables = {
@@ -182,6 +186,11 @@ in {
           }
         ];
       };
+      bars = [
+        {
+	  command = "${pkgs.waybar}/bin/waybar";
+	}
+      ];
       startup = [
         # Launch Firefox on start
       ];
