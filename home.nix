@@ -42,6 +42,11 @@ in {
   {
     enable = true;
   };
+
+  dconf = {
+    enable = true;
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
