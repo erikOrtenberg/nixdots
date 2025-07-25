@@ -65,11 +65,19 @@
       btop
       legcord
       ncdu
+      docker
     ];
+  };
+  virtualisation.docker.enable = true;
+
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
   };
 
   services.displayManager.sddm = {
     enable = true;
+    package = pkgs.kdePackages.sddm;
     wayland = {
       enable = true;
       compositor = lib.mkForce "kwin";
@@ -77,6 +85,18 @@
   };
   programs.sway.enable = true;
   programs.sway.extraOptions = ["--unsupported-gpu"];
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "green";
+    sddm = {
+      background = "${./bgRight.png}";
+      loginBackground = true;
+    };
+  };
+
+
   programs.fish.enable = true;
   programs.bash = {
     interactiveShellInit = ''
@@ -145,6 +165,8 @@
     enable = true;
     extest.enable = true;
     protontricks.enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];

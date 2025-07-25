@@ -29,6 +29,7 @@ in {
     nerd-fonts.zed-mono
     swaybg
     lshw
+    feh
   ];
 
   home.sessionVariables = {
@@ -57,6 +58,7 @@ in {
     pictures = "${homeDir}/Pictures";
     videos = "${homeDir}/Videos";
   };
+
   programs.git = {
     enable = true;
     userEmail = "erik.ortenberg@gmail.com";

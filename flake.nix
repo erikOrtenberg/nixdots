@@ -11,9 +11,13 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix }: 
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, catppuccin }: 
     let 
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -30,6 +34,7 @@
           inherit pkgs;
           modules = [
             ./configuration.nix
+	    catppuccin.nixosModules.catppuccin
           ];
         };
       };
