@@ -30,6 +30,8 @@ in {
     swaybg
     lshw
     feh
+    unzip
+    gammastep
   ];
 
   home.sessionVariables = {
@@ -202,6 +204,17 @@ in {
         # Launch Firefox on start
       ];
     };
+  };
+
+  services.gammastep = {
+    enable = true;
+    latitude  = 57.69185789967825;
+    longitude = 11.98613160127014;
+    temperature = {
+      day   = 5500;
+      night = 3700;
+    };
+    tray = true;
   };
 
   # Let Home Manager install and manage itself.
