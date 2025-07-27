@@ -1,49 +1,94 @@
-{ config, pkgs, spicetify-nix, ... }:
+{ config, pkgs, spicetify-nix, nixvim, ... }:
 let
   username = "kryddan";
   homeDir = "/home/${username}";
 in {
-  #nix.settings.experimental-features = ["nix-command" "flakes"];
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = username;
-  home.homeDirectory = homeDir;
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
-
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; [
-    signal-desktop
-    gimp
-    pulsemixer
-    audacity
-    nerd-fonts.terminess-ttf
-    nerd-fonts.zed-mono
-    swaybg
-    lshw
-    feh
-    unzip
-    gammastep
+  imports = [
+    ./software/neovim/neovim.nix
+    nixvim.homeManagerModules.nixvim
+    spicetify-nix.homeManagerModules.default
   ];
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
+  home = {
+    username = username;
+    homeDirectory = homeDir;
+
+    # No touchie
+    stateVersion = "25.05";
+
+    packages = with pkgs; [
+      signal-desktop
+      gimp
+      pulsemixer
+      audacity
+      nerd-fonts.terminess-ttf
+      nerd-fonts.zed-mono
+      swaybg
+      lshw
+      feh
+      unzip
+      gammastep
+      gcc
+      rustup
+      cmake
+      gnumake
+      libtool
+      sqlite
+      nixpkgs-fmt
+      killall
+      htop
+      btop
+    ];
+
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
 
-  imports = [ spicetify-nix.homeManagerModules.default ];
-  programs.spicetify = let
-    spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
-  in
-  {
-    enable = true;
+  programs = {
+    spicetify = let
+      spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
+    in
+    {
+      enable = true;
+    };
+    git = {
+      enable = true;
+      userEmail = "erik.ortenberg@gmail.com";
+      userName = "Erik Örtenberg";
+      extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = true;
+        };
+      };
+    };
+
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+      '';
+      shellAliases = {
+        #navigation shortcuts
+        "..." = "cd ../..";
+        #git aliases
+        "gst" = "git status";
+        "gad" = "git add .";
+        "grs" = "git reset";
+        "gcm" = "git commit -m";
+        "gsh" = "git stash";
+        "gsp" = "git stash pop";
+        "gch" = "git checkout";
+        "gbr" = "git branch";
+        "gme" = "git merge";
+        "gph" = "git push";
+        "gpl" = "git pull --rebase --autostash";
+      };
+    };
   };
 
   dconf = {
@@ -61,42 +106,6 @@ in {
     videos = "${homeDir}/Videos";
   };
 
-  programs.git = {
-    enable = true;
-    userEmail = "erik.ortenberg@gmail.com";
-    userName = "Erik Örtenberg";
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-      pull = {
-        rebase = true;
-      };
-    };
-  };
-
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-    '';
-    shellAliases = {
-      #navigation shortcuts
-      "..." = "cd ../..";
-      #git aliases
-      "gst" = "git status";
-      "gad" = "git add .";
-      "grs" = "git reset";
-      "gcm" = "git commit -m";
-      "gsh" = "git stash";
-      "gsp" = "git stash pop";
-      "gch" = "git checkout";
-      "gbr" = "git branch";
-      "gme" = "git merge";
-      "gph" = "git push";
-      "gpl" = "git pull --rebase --autostash";
-    };
-  };
 
   
   wayland.windowManager.sway = {

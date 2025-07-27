@@ -15,9 +15,13 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, catppuccin }: 
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, catppuccin, nixvim }: 
     let 
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -43,6 +47,7 @@
           inherit pkgs;
 	  extraSpecialArgs = {
             inherit spicetify-nix;
+            inherit nixvim;
           };
           modules = [
             ./home.nix
