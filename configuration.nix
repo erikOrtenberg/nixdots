@@ -66,6 +66,7 @@
       legcord
       ncdu
       docker
+      docker-buildx
     ];
   };
   virtualisation.docker.enable = true;
