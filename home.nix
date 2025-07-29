@@ -131,12 +131,13 @@ in
           mode = "2560x1440@143.972Hz";
           background = "${homeDir}/nixdots/bgRight.png stretch #000000";
           scale_filter = "nearest";
-          pos = "1920 0";
+          pos = "1080 0";
         };
         "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487" = {
           mode = "1920x1080@143.999Hz";
           background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
-          pos = "0 180";
+          pos = "0 -240";
+          transform = "90";
         };
       };
       gaps = {
