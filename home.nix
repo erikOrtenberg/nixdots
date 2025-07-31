@@ -137,7 +137,7 @@ in
           mode = "1920x1080@143.999Hz";
           background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
           pos = "0 -240";
-          transform = "90";
+          transform = "270";
         };
       };
       gaps = {
