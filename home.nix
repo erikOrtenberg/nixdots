@@ -117,6 +117,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     extraOptions = [ "--unsupported-gpu" ];
+    extraConfig = "default_orientation auto";
     config = rec {
       modifier = "Mod4";
       # Use kitty as default terminal
