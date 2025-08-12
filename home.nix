@@ -46,6 +46,9 @@ in
       killall
       htop
       btop
+      glow
+      dnsutils
+      python3
     ];
 
     sessionVariables = {
@@ -75,10 +78,57 @@ in
       };
     };
 
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        serverburken = {
+          host = "serverburken";
+          hostname = "kryddan.xyz";
+          user = "kryddan";
+        };
+        rat-old = {
+          host = "rat-old";
+          hostname = "rotarypub.se";
+          user = "kryddan";
+          setEnv = {
+            TERM = "xterm-256color";
+          };
+        };
+        rat = {
+          host = "rat";
+          hostname = "rotarypub.se";
+          port = 222;
+          user = "kryddan";
+        };
+        link = {
+          host = "link";
+          hostname = "link.cse.chalmers.se";
+          user = "dhack";
+        };
+        zelda = {
+          host = "zelda";
+          hostname = "zelda.cse.chalmers.se";
+          user = "dhack";
+        };
+        ganon = {
+          host = "ganon";
+          hostname = "ganon.dhack.se";
+          port = 222;
+          user = "kryddan";
+        };
+        medli = {
+          host = "medli";
+          hostname = "pub.dhack.se";
+          port = 222;
+          user = "hacke";
+        };
+      };
+    };
     fish = {
       enable = true;
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
+        glow ~/Documents/Privat/Todo.md
       '';
       shellAliases = {
         #navigation shortcuts
@@ -127,6 +177,22 @@ in
           xkb_layout = "se";
         };
       };
+      ## Horizontal
+      #output = {
+      #  "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
+      #    mode = "2560x1440@143.972Hz";
+      #    background = "${homeDir}/nixdots/bgRight.png stretch #000000";
+      #    scale_filter = "nearest";
+      #    pos = "1920 0";
+      #  };
+      #  "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487" = {
+      #    mode = "1920x1080@143.999Hz";
+      #    background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
+      #    scale_filter = "nearest";
+      #    pos = "0 180";
+      #  };
+      #};
+      ## Vertical
       output = {
         "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
           mode = "2560x1440@143.972Hz";
@@ -137,6 +203,7 @@ in
         "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487" = {
           mode = "1920x1080@143.999Hz";
           background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
+          scale_filter = "nearest";
           pos = "0 -240";
           transform = "270";
         };
@@ -250,6 +317,18 @@ in
         # Launch Firefox on start
       ];
     };
+  };
+
+  services.mako = {
+    enable = true;
+    settings = {
+      default-timeout = 5000;
+    };
+  };
+
+  services.nextcloud-client = {
+    enable = true;
+    startInBackground = true;
   };
 
   services.gammastep = {
