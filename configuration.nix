@@ -2,15 +2,23 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -18,7 +26,12 @@
   networking.hostName = "SpiceCube"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+
+  # Keyring service
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -42,7 +55,7 @@
     xkb.layout = "se";
     xkb.options = "eurosign:e,caps:escape";
   };
-  
+
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -58,7 +71,10 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kryddan = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "docker"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       ranger
       htop
@@ -85,7 +101,7 @@
     };
   };
   programs.sway.enable = true;
-  programs.sway.extraOptions = ["--unsupported-gpu"];
+  programs.sway.extraOptions = [ "--unsupported-gpu" ];
 
   catppuccin = {
     enable = true;
@@ -96,7 +112,6 @@
       loginBackground = true;
     };
   };
-
 
   programs.fish.enable = true;
   programs.bash = {
@@ -121,7 +136,6 @@
     grim # screenshot 1
     slurp # screenshot 2
     wl-clipboard
-    mako # notification system
     git
   ];
 
@@ -174,4 +188,3 @@
   };
 
 }
-
