@@ -49,6 +49,7 @@ in
       glow
       dnsutils
       python3
+      orca-slicer
     ];
 
     sessionVariables = {
@@ -177,32 +178,32 @@ in
           xkb_layout = "se";
         };
       };
-      ## Horizontal
+      # Horizontal
       #output = {
       #  "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
       #    mode = "2560x1440@143.972Hz";
-      #    background = "${homeDir}/nixdots/bgRight.png stretch #000000";
+      #    background = "${homeDir}/nixdots/bgHorizontalRight.png stretch #000000";
       #    scale_filter = "nearest";
       #    pos = "1920 0";
       #  };
       #  "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487" = {
       #    mode = "1920x1080@143.999Hz";
-      #    background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
+      #    background = "${homeDir}/nixdots/bgHorizontalLeft.png stretch #000000";
       #    scale_filter = "nearest";
       #    pos = "0 180";
       #  };
       #};
-      ## Vertical
+      # Vertical
       output = {
         "GIGA-BYTE TECHNOLOGY CO., LTD. G27Q 20452B002455" = {
           mode = "2560x1440@143.972Hz";
-          background = "${homeDir}/nixdots/bgRight.png stretch #000000";
+          background = "${homeDir}/nixdots/bgVerticalRight.png stretch #000000";
           scale_filter = "nearest";
           pos = "1080 0";
         };
         "GIGA-BYTE TECHNOLOGY CO., LTD. GIGABYTE M27F 20310B004487" = {
           mode = "1920x1080@143.999Hz";
-          background = "${homeDir}/nixdots/bgLeft.png stretch #000000";
+          background = "${homeDir}/nixdots/bgVerticalLeft.png stretch #000000";
           scale_filter = "nearest";
           pos = "0 -240";
           transform = "270";

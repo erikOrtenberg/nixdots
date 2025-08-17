@@ -108,7 +108,7 @@
     flavor = "mocha";
     accent = "green";
     sddm = {
-      background = "${./bgRight.png}";
+      background = "/home/kryddan/nixdots/bgHorizontalLeft.png";
       loginBackground = true;
     };
   };
