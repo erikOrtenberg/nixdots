@@ -26,6 +26,7 @@ in
 
     packages = with pkgs; [
       signal-desktop
+      sway-contrib.grimshot
       gimp
       pulsemixer
       audacity
@@ -180,7 +181,10 @@ in
   wayland.windowManager.sway = {
     enable = true;
     extraOptions = [ "--unsupported-gpu" ];
-    extraConfig = "default_orientation auto";
+    extraConfig = "
+     default_orientation auto
+     bindsym Mod4+Shift+s exec grimshot savecopy area
+      ";
     config = rec {
       modifier = "Mod4";
       # Use kitty as default terminal
