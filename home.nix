@@ -13,7 +13,7 @@ in
 
   imports = [
     ./software/neovim/neovim.nix
-    nixvim.homeManagerModules.nixvim
+    nixvim.homeModules.nixvim
     spicetify-nix.homeManagerModules.default
   ];
 
