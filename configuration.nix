@@ -50,20 +50,65 @@
   hardware.graphics = {
     enable = true;
   };
-  services.protonmail-bridge.enable = true;
-  services.xserver = {
-    videoDrivers = [ "nvidia" ];
-    xkb.layout = "se";
-    xkb.options = "eurosign:e,caps:escape";
+
+  services = {
+    protonmail-bridge = {
+      enable = true;
+      path = [ pkgs.gnome-keyring ]; # # Hack apperantly
+      logLevel = "info";
+    };
+
+    xserver = {
+      videoDrivers = [ "nvidia" ];
+      xkb.layout = "se";
+      xkb.options = "eurosign:e,caps:escape";
+    };
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+
+    mullvad-vpn = {
+      enable = true;
+      package = pkgs.mullvad-vpn;
+    };
+
+    displayManager.sddm = {
+      enable = true;
+      package = pkgs.kdePackages.sddm;
+      wayland = {
+        enable = true;
+        compositor = lib.mkForce "kwin";
+      };
+    };
   };
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
+  programs = {
+    sway = {
+      enable = true;
+      extraOptions = [ "--unsupported-gpu" ];
+    };
+    fish.enable = true;
+    bash = {
+      interactiveShellInit = ''
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+        fi
+      '';
+    };
+    steam = {
+      enable = true;
+      extest.enable = true;
+      protontricks.enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -80,29 +125,12 @@
       ranger
       htop
       btop
-      legcord
       ncdu
       docker
       docker-buildx
     ];
   };
   virtualisation.docker.enable = true;
-
-  services.mullvad-vpn = {
-    enable = true;
-    package = pkgs.mullvad-vpn;
-  };
-
-  services.displayManager.sddm = {
-    enable = true;
-    package = pkgs.kdePackages.sddm;
-    wayland = {
-      enable = true;
-      compositor = lib.mkForce "kwin";
-    };
-  };
-  programs.sway.enable = true;
-  programs.sway.extraOptions = [ "--unsupported-gpu" ];
 
   catppuccin = {
     enable = true;
@@ -113,18 +141,6 @@
       loginBackground = true;
     };
   };
-
-  programs.fish.enable = true;
-  programs.bash = {
-    interactiveShellInit = ''
-      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-      then
-        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-      fi
-    '';
-  };
-  programs.firefox.enable = true;
 
   security.polkit.enable = true;
 
@@ -138,6 +154,7 @@
     slurp # screenshot 2
     wl-clipboard
     git
+    protonmail-bridge
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -177,15 +194,5 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-  programs.steam = {
-    enable = true;
-    extest.enable = true;
-    protontricks.enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-    ];
-  };
 
 }

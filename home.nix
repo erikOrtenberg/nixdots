@@ -43,6 +43,7 @@ in
       libtool
       sqlite
       nixpkgs-fmt
+      legcord
       killall
       htop
       btop
@@ -59,6 +60,9 @@ in
   };
 
   programs = {
+    firefox = {
+      enable = true;
+    };
     spicetify =
       let
         spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
