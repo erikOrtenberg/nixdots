@@ -50,6 +50,7 @@
   hardware.graphics = {
     enable = true;
   };
+  services.protonmail-bridge.enable = true;
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     xkb.layout = "se";

@@ -49,6 +49,7 @@ in
       glow
       dnsutils
       python3
+      protonmail-bridge-gui
       orca-slicer
     ];
 
@@ -76,6 +77,13 @@ in
         pull = {
           rebase = true;
         };
+      };
+    };
+
+    thunderbird = {
+      enable = true;
+      profiles.erik = {
+        isDefault = true;
       };
     };
 
@@ -320,27 +328,33 @@ in
     };
   };
 
-  services.mako = {
-    enable = true;
-    settings = {
-      default-timeout = 5000;
-    };
-  };
+  services = {
+    # protonmail-bridge = {
+    #   enable = true;
+    # };
 
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  services.gammastep = {
-    enable = true;
-    latitude = 57.69185789967825;
-    longitude = 11.98613160127014;
-    temperature = {
-      day = 5500;
-      night = 3700;
+    mako = {
+      enable = true;
+      settings = {
+        default-timeout = 5000;
+      };
     };
-    tray = true;
+
+    nextcloud-client = {
+      enable = true;
+      startInBackground = true;
+    };
+
+    gammastep = {
+      enable = true;
+      latitude = 57.69185789967825;
+      longitude = 11.98613160127014;
+      temperature = {
+        day = 5500;
+        night = 3700;
+      };
+      tray = true;
+    };
   };
 
   # Let Home Manager install and manage itself.
