@@ -8,11 +8,11 @@
     };
 
     # https://nix-community.github.io/nixvim/NeovimOptions/autoGroups/index.html
-          ##autoGroups = {
-    	##  "kickstart-lsp-attach" = {
-    	##    clear = true;
-    	##  };
-    	##};
+    ##autoGroups = {
+    ##  "kickstart-lsp-attach" = {
+    ##    clear = true;
+    ##  };
+    ##};
 
     # A plugin that properly configures LuaLS for editing your Neovim config
     #  by lazily updating your workspace libraries.
@@ -86,9 +86,9 @@
         #    `https://nix-community.github.io/nixvim/plugins/typescript-tools/index.html?highlight=typescript-tools#pluginstypescript-toolspackage`
         #
         # But for many setups the LSP (`ts_ls`) will work just fine
-        # ts_ls = {
-        #   enable = true;
-        # };
+        ts_ls = {
+          enable = true;
+        };
 
         # Nix lsp
         nil_ls = {
@@ -291,6 +291,6 @@
           end, '[T]oggle Inlay [H]ints')
         end
       '';
-    }; 
+    };
   };
 }
