@@ -21,8 +21,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, catppuccin, nixvim }: 
-    let 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      spicetify-nix,
+      catppuccin,
+      nixvim,
+    }:
+    let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
@@ -31,6 +39,7 @@
         };
       };
       lib = nixpkgs;
+      secrets = builtins.fromTOML (builtins.readFile ./secrets.toml);
     in
     {
       nixosConfigurations = {
@@ -38,16 +47,17 @@
           inherit pkgs;
           modules = [
             ./configuration.nix
-	    catppuccin.nixosModules.catppuccin
+            catppuccin.nixosModules.catppuccin
           ];
         };
       };
       homeConfigurations = {
         SpiceCube = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-	  extraSpecialArgs = {
+          extraSpecialArgs = {
             inherit spicetify-nix;
             inherit nixvim;
+            inherit secrets;
           };
           modules = [
             ./home.nix

@@ -3,6 +3,7 @@
   pkgs,
   spicetify-nix,
   nixvim,
+  secrets,
   ...
 }:
 let
@@ -12,6 +13,7 @@ in
 {
 
   imports = [
+    ./software/ssh/ssh.nix
     ./software/neovim/neovim.nix
     nixvim.homeModules.nixvim
     spicetify-nix.homeManagerModules.default
@@ -33,8 +35,10 @@ in
       nerd-fonts.terminess-ttf
       nerd-fonts.zed-mono
       swaybg
+      autotiling
       lshw
       feh
+      zip
       unzip
       gammastep
       gcc
@@ -52,7 +56,13 @@ in
       dnsutils
       python3
       protonmail-bridge-gui
+      glxinfo
+      mesa
+      libglvnd
       orca-slicer
+      libreoffice-qt6
+      postman
+      nomad
     ];
 
     sessionVariables = {
@@ -64,6 +74,7 @@ in
     firefox = {
       enable = true;
     };
+
     spicetify =
       let
         spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
@@ -73,9 +84,11 @@ in
       };
     git = {
       enable = true;
-      userEmail = "erik.ortenberg@gmail.com";
-      userName = "Erik Örtenberg";
-      extraConfig = {
+      settings = {
+        user = {
+          email = "erik.ortenberg@gmail.com";
+          name = "Erik Örtenberg";
+        };
         init = {
           defaultBranch = "main";
         };
@@ -92,56 +105,12 @@ in
       };
     };
 
-    ssh = {
-      enable = true;
-      matchBlocks = {
-        serverburken = {
-          host = "serverburken";
-          hostname = "kryddan.xyz";
-          user = "kryddan";
-        };
-        rat-old = {
-          host = "rat-old";
-          hostname = "rotarypub.se";
-          user = "kryddan";
-          setEnv = {
-            TERM = "xterm-256color";
-          };
-        };
-        rat = {
-          host = "rat";
-          hostname = "rotarypub.se";
-          port = 222;
-          user = "kryddan";
-        };
-        link = {
-          host = "link";
-          hostname = "link.cse.chalmers.se";
-          user = "dhack";
-        };
-        zelda = {
-          host = "zelda";
-          hostname = "zelda.cse.chalmers.se";
-          user = "dhack";
-        };
-        ganon = {
-          host = "ganon";
-          hostname = "ganon.dhack.se";
-          port = 222;
-          user = "kryddan";
-        };
-        medli = {
-          host = "medli";
-          hostname = "pub.dhack.se";
-          port = 222;
-          user = "hacke";
-        };
-      };
-    };
     fish = {
       enable = true;
       interactiveShellInit = ''
         set fish_greeting # Disable greeting
+        set NOMAD_TOKEN 
+        set NOMAD_ADDR 
         glow ~/Documents/Privat/Todo.md
       '';
       shellAliases = {
@@ -184,6 +153,7 @@ in
     extraConfig = "
      default_orientation auto
      bindsym Mod4+Shift+s exec grimshot savecopy area
+     exec_always autotiling
       ";
     config = rec {
       modifier = "Mod4";
