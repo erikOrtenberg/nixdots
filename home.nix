@@ -162,6 +162,8 @@ in
       input = {
         "type:keyboard" = {
           xkb_layout = "se";
+          repeat_delay = "200";
+          repeat_rate = "30";
         };
       };
       # Horizontal
